@@ -1,90 +1,91 @@
 import axios from 'axios';
 
-// Safely get API URL with proper validation
+// -------------------------------
+// Base URL Resolver
+// -------------------------------
 const getBaseURL = () => {
   const apiUrl = import.meta.env.VITE_API_URL?.trim();
 
   if (import.meta.env.PROD) {
     if (!apiUrl) {
       console.error('❌ CRITICAL: VITE_API_URL is not set in production environment');
-      console.warn('⚠️ Falling back to /api proxy - ensure backend is configured correctly');
       return '/api';
     }
     return apiUrl;
   }
 
-  // Development: prefer the Vite proxy for local backend traffic. Only use VITE_API_URL when it is explicitly set to a valid local or remote endpoint.
-  if (!apiUrl) {
-    return '/api';
-  }
+  if (!apiUrl) return '/api';
 
   if (apiUrl.startsWith('/') || /^https?:\/\//.test(apiUrl)) {
-    console.warn('⚠️ Using VITE_API_URL in development:', apiUrl);
     return apiUrl;
   }
 
-  console.warn('⚠️ Invalid VITE_API_URL in development. Falling back to /api proxy.');
   return '/api';
 };
 
 const BASE_URL = getBaseURL();
 
+// -------------------------------
+// Axios Instance
+// -------------------------------
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: BASE_URL,
   withCredentials: true,
-  xsrfCookieName: "XSRF-TOKEN",
-  xsrfHeaderName: "X-CSRF-Token",
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-CSRF-Token',
 });
 
-
-let csrfToken = null;
+// -------------------------------
+// CSRF Token Fetch
+// -------------------------------
 export const fetchCsrfToken = async () => {
   try {
-    const { data } = await api.get('/csrf-token');
-    csrfToken = data.csrfToken;
+    await api.get('/csrf-token');
+    console.log('✅ CSRF token fetched');
   } catch (err) {
-    console.error('Failed to grab CSRF token', err);
+    console.error('❌ Failed to grab CSRF token', err);
   }
 };
 
-api.interceptors.request.use((config) => {
-  if (csrfToken && ['post', 'put', 'patch', 'delete'].includes(config.method)) {
-    config.headers['CSRF-Token'] = csrfToken;
-  }
-  return config;
-});
-
+// -------------------------------
+// Refresh Token Logic
+// -------------------------------
 const refreshAuthToken = async () => {
   try {
     const response = await authAPI.refreshToken();
     return response?.data?.success === true;
-  } catch (err) {
+  } catch {
     return false;
   }
 };
 
+// -------------------------------
+// Response Interceptor
+// -------------------------------
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
+    // Retry CSRF failures once
     if (error.response?.status === 403 && originalRequest && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         await fetchCsrfToken();
-        originalRequest.headers['CSRF-Token'] = csrfToken;
         return api(originalRequest);
       } catch (retryError) {
         return Promise.reject(retryError);
       }
     }
 
+    // Handle auth refresh
     if (error.response?.status === 401 && originalRequest && !originalRequest._retryAuth) {
       if (originalRequest.skipAuthRedirect) {
         return Promise.reject(error);
       }
 
       originalRequest._retryAuth = true;
+
       if (originalRequest.url?.includes('/auth/refresh')) {
         window.location.href = '/login';
         return Promise.reject(error);
@@ -95,11 +96,15 @@ api.interceptors.response.use(
         return api(originalRequest);
       }
 
-      if (window.location.pathname !== '/login' && window.location.pathname !== '/auth-required') {
+      if (
+        window.location.pathname !== '/login' &&
+        window.location.pathname !== '/auth-required'
+      ) {
         window.location.href = '/login';
       }
     }
 
+    // Handle rate limiting
     if (error.response?.status === 429 && originalRequest && !originalRequest._retry429) {
       originalRequest._retry429 = true;
       const retryAfter = parseInt(error.response.headers['retry-after'], 10) || 1;
@@ -111,6 +116,9 @@ api.interceptors.response.use(
   }
 );
 
+// -------------------------------
+// Auth API
+// -------------------------------
 export const authAPI = {
   register: (data) => api.post('/auth/register', data),
   login: (data) => api.post('/auth/login', data),
@@ -125,6 +133,9 @@ export const authAPI = {
     api.put(`/auth/reset-password/${token}`, { password, confirmPassword }),
 };
 
+// -------------------------------
+// Expenses API
+// -------------------------------
 export const expensesAPI = {
   getAll: (params) => api.get('/expenses', { params }),
   getOne: (id) => api.get(`/expenses/${id}`),
@@ -134,6 +145,9 @@ export const expensesAPI = {
   delete: (id) => api.delete(`/expenses/${id}`),
 };
 
+// -------------------------------
+// Tasks API
+// -------------------------------
 export const tasksAPI = {
   getAll: () => api.get('/tasks'),
   saveAll: (data) => api.put('/tasks', data),
@@ -143,6 +157,9 @@ export const tasksAPI = {
   resetAll: () => api.patch('/tasks/reset'),
 };
 
+// -------------------------------
+// Events API
+// -------------------------------
 export const eventsAPI = {
   getAll: (params) => api.get('/events', { params }),
   getOne: (id) => api.get(`/events/${id}`),
@@ -152,6 +169,9 @@ export const eventsAPI = {
   delete: (id) => api.delete(`/events/${id}`),
 };
 
+// -------------------------------
+// Attendance API
+// -------------------------------
 export const attendanceAPI = {
   getAll: () => api.get('/attendance'),
   saveAll: (data) => api.put('/attendance', data),

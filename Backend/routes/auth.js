@@ -51,7 +51,7 @@ Object.entries(rules).forEach(([name, arr]) => {
 });
 
 router.post('/register', registerRules,     validate, register);
-router.post('/login',    loginRules,        validate, login);
+router.post('/login',  login);
 router.post('/forgot-password', forgotPasswordLimiter, forgotPasswordRules, validate, forgotPassword);
 router.put('/reset-password/:resetToken', resetPasswordRules, validate, resetPassword);
 

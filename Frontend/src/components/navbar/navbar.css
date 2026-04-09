@@ -1,0 +1,305 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: -10px;
+  padding-bottom: -10px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 95%;
+  margin-left: 35px;
+  height: 50px;
+  margin-top: 25px;
+  border-radius: 45px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.logo-text {
+  font-size: 21px;
+  font-weight: 100;
+  margin-left: 30px;
+  letter-spacing: 0px;
+  font-family: 'Courier New', Courier, monospace;
+  color: #ffffff;
+  font-weight: bold;
+  padding-top: 10px;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.nav-links a {
+  margin: 0 22px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-radius: 25px;
+  padding-top: 7px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid transparent;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.auth-section .login-btn {
+  background-color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #000000;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding-bottom: 10px;
+  margin-right: 5px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.auth-section .login-btn:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.15);
+}
+
+/* Optional: Add a signup/register button if needed */
+.auth-section .signup-btn {
+  background-color: transparent;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding-bottom: 10px;
+  margin-left: 5px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.auth-section .signup-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Active link state */
+.nav-links a.active {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ── User Pill (cylinder shape) ── */
+.user-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;           /* fully rounded = cylinder/pill */
+  padding: 4px 16px 4px 4px;     /* tight left so avatar sits flush */
+  margin-right: 10px;
+  transition: background 0.3s ease, border-color 0.3s ease;
+  cursor: default;
+}
+
+.user-pill:hover {
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Circle avatar with capital initial */
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffffff, #c8c8c8);
+  color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Last name text inside the pill */
+.user-lastname {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  white-space: nowrap;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    width: 90%;
+    margin-left: 5%;
+    padding: 0 10px;
+  }
+  
+  .nav-links a {
+    margin: 0 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 14px;
+  }
+  
+  .logo-text {
+    font-size: 18px;
+    margin-left: 15px;
+  }
+  
+  .logo-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .user-lastname {
+    display: none; /* on small screens just show the avatar */
+  }
+
+  .user-pill {
+    padding: 4px;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px;
+  }
+  
+  .nav-links {
+    order: 3;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .nav-links a {
+    margin: 0 8px;
+    font-size: 13px;
+  } 
+}
+
+/* ══════════════════════════════════════
+   LIGHT THEME
+══════════════════════════════════════ */
+
+body.light-theme .navbar {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  color: #1a1a1a;
+}
+
+body.light-theme .logo-text {
+  color: #1a1a1a;
+  text-shadow: none;
+}
+
+body.light-theme .nav-links a {
+  color: rgba(0, 0, 0, 0.65);
+}
+
+body.light-theme .nav-links a:hover {
+  color: #1a1a1a;
+  background-color: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .nav-links a.active {
+  color: #000000;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .auth-section .login-btn {
+  background-color: #000000;
+  color: #ffffff;
+  border-color: #000000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .auth-section .login-btn:hover {
+  background-color: #111111;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+body.light-theme .user-pill {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .user-pill:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.18);
+}
+
+body.light-theme .user-avatar {
+  background: linear-gradient(135deg, #000000, #111111);
+  color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+body.light-theme .user-lastname {
+  color: #1a1a1a;
+}
+/* Fix black strip above navbar */
+body {
+  background-color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+body.light-theme {
+  background-color: #ffffff;
+}
+
+body.light-theme {
+  background-color: #ffffff;
+}
+
+html:has(body.light-theme) {
+  background-color: #ffffff;
+}

@@ -32,8 +32,10 @@ const BASE_URL = getBaseURL();
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
-  headers: { 'Content-Type': 'application/json' },
+  xsrfCookieName: "XSRF-TOKEN",
+  xsrfHeaderName: "X-CSRF-Token",
 });
+
 
 let csrfToken = null;
 export const fetchCsrfToken = async () => {

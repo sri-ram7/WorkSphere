@@ -159,6 +159,7 @@ const csrfProtection = csrf({
     secure: process.env.NODE_ENV === 'production',
     sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', 
   },
+  value: (req) => req.headers['x-csrf-token'],
 });
 
 app.use(csrfProtection);

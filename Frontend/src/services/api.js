@@ -28,25 +28,38 @@ const BASE_URL = getBaseURL();
 // -------------------------------
 // Axios Instance
 // -------------------------------
-
 const api = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-CSRF-Token',
+  // ✅ Removed xsrfCookieName & xsrfHeaderName — they don't work cross-origin
+  // because the CSRF cookie belongs to the backend domain, not the frontend domain.
+  // We manually read the token from the response body and inject it via request interceptor.
 });
 
 // -------------------------------
-// CSRF Token Fetch
+// CSRF Token (stored in memory)
 // -------------------------------
+let csrfToken = null;
+
 export const fetchCsrfToken = async () => {
   try {
-    await api.get('/csrf-token');
+    const response = await api.get('/csrf-token');
+    csrfToken = response.data.csrfToken; // ✅ read from body, not cookie
     console.log('✅ CSRF token fetched');
   } catch (err) {
     console.error('❌ Failed to grab CSRF token', err);
   }
 };
+
+// -------------------------------
+// Request Interceptor — inject CSRF token
+// -------------------------------
+api.interceptors.request.use((config) => {
+  if (csrfToken && ['post', 'put', 'patch', 'delete'].includes(config.method)) {
+    config.headers['X-CSRF-Token'] = csrfToken;
+  }
+  return config;
+});
 
 // -------------------------------
 // Refresh Token Logic
@@ -68,11 +81,12 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Retry CSRF failures once
+    // Retry CSRF failures once with a fresh token
     if (error.response?.status === 403 && originalRequest && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
         await fetchCsrfToken();
+        originalRequest.headers['X-CSRF-Token'] = csrfToken; // ✅ inject fresh token
         return api(originalRequest);
       } catch (retryError) {
         return Promise.reject(retryError);

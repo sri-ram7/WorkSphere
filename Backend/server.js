@@ -155,10 +155,11 @@ app.use(cookieParser());
 const csrfProtection = csrf({
   cookie: {
     key: 'XSRF-TOKEN',
-    httpOnly: true,
+    httpOnly: false,  // ✅ critical
     secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', 
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
   },
+  // explicitly tell csurf which header to look at
   value: (req) => req.headers['x-csrf-token'],
 });
 

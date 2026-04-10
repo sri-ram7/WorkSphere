@@ -28,8 +28,9 @@ const BASE_URL = getBaseURL();
 // -------------------------------
 // Axios Instance
 // -------------------------------
+
 const api = axios.create({
-  baseURL: 'https://worksphere-q6eg.onrender.com/api',
+  baseURL: BASE_URL,
   withCredentials: true,
   xsrfCookieName: 'XSRF-TOKEN',
   xsrfHeaderName: 'X-CSRF-Token',

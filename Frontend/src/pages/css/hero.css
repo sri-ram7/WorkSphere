@@ -594,6 +594,28 @@
   overflow: hidden;
   width: 1300px;
   margin: 3rem 0;
+  position: relative;
+}
+
+.logo-strip::before,
+.logo-strip::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.logo-strip::before {
+  left: 0;
+  background: linear-gradient(to right, #000000 0%, transparent 100%);
+}
+
+.logo-strip::after {
+  right: 0;
+  background: linear-gradient(to left, #000000 0%, transparent 100%);
 }
 
 .logo-track {
@@ -1208,6 +1230,14 @@ body.light-theme .reviews-count strong {
 
 body.light-theme .logo-strip {
   background: transparent;
+}
+
+body.light-theme .logo-strip::before {
+  background: linear-gradient(to right, #ffffff 0%, transparent 100%);
+}
+
+body.light-theme .logo-strip::after {
+  background: linear-gradient(to left, #ffffff 0%, transparent 100%);
 }
 
 body.light-theme .logo-box {

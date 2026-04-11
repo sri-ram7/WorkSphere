@@ -68,12 +68,28 @@
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: -0.01em;
-  color: #ffffff;
-  text-shadow: 0 0 40px rgba(255, 255, 255, 0.3);
+  background: linear-gradient(
+    105deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.7) 40%,
+    #ffffff 50%,
+    rgba(255, 255, 255, 0.4) 60%,
+    #ffffff 100%
+  );
+  background-size: 200% auto;
+  background-position: -200% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
   max-width: 1000px;
   margin-bottom: 1.5rem;
+  animation: shimmer 4s linear infinite;
 }
-
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
 .ai-hero-description {
   font-size: 18px;
   font-weight: 500;
@@ -953,8 +969,20 @@ body.light-theme .cursor-glow {
 }
 
 body.light-theme .ai-hero-title {
-  color: #1a1a1a;
-  text-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(
+    105deg,
+    #1a1a1a 0%,
+    rgba(26, 26, 26, 0.7) 40%,
+    #1a1a1a 50%,
+    rgba(26, 26, 26, 0.4) 60%,
+    #1a1a1a 100%
+  );
+  background-size: 200% auto;
+  background-position: -200% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
 }
 
 body.light-theme .ai-hero-description {

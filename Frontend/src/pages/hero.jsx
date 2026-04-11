@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import './css/hero.css'
 import { useTheme } from '../context/ThemeContext';
+import GravityParticles from '../components/GravityParticles';
 
 const Hero = () => {
   const { theme } = useTheme();
@@ -20,6 +21,22 @@ const Hero = () => {
 
   return (
     <section className="hero">
+      <GravityParticles
+        count={300}
+        magnetRadius={10}
+        ringRadius={10}
+        waveSpeed={0.4}
+        waveAmplitude={1}
+        particleSize={2}
+        lerpSpeed={0.1}
+        color="#FF9FFC"
+        particleVariance={1}
+        rotationSpeed={0}
+        depthFactor={1}
+        pulseSpeed={3}
+        particleShape="capsule"
+        fieldStrength={10}
+      />
       
       <div className="cursor-glow"></div>
 

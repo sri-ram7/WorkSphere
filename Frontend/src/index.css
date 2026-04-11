@@ -4,22 +4,15 @@
   box-sizing: border-box;
 }
 
-html, body {
-  height: 100vh;
-
-  /* background-image: url("./assets/bodyimage.jpg"); */
-  background: black;
-
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
-
 body {
-  margin: 0;
-  transition: background 0.5s ease-in-out;
+  background: #0a0a0a;
 }
 
 /* Hero Pink */
@@ -42,16 +35,6 @@ body.blue-bg {
 
 /* ── Light Theme Global ── */
 body.light-theme {
-  background: #f0f2f5 !important;
+  background: #f4f4f4 !important;
   color: #1a1a1a;
-  transition: background 0.4s ease, color 0.4s ease;
-}
-
-html, body, #root {
-  margin: 0;
-  padding: 0;
-}
-
-body.light-theme {
-  background-color: #ffffff;
 }

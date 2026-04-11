@@ -48,14 +48,15 @@
 }
 
 .dashboard-container .navbar .logo-text {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
   background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 0;
-  letter-spacing: -0.5px;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 /* ===== User Profile Section ===== */
@@ -456,12 +457,161 @@
   background: linear-gradient(180deg, #f0f0f0 0%, #ffffff 100%);
 }
 
+/* ── Dashboard Hamburger (SVG icon) ── */
+.dashboard-hamburger {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1001;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+  color: #ffffff;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.dashboard-hamburger:hover {
+  background: rgba(0, 0, 0, 0.85);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.dashboard-hamburger.open {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Dashboard Mobile Menu ── */
+.dashboard-mobile-menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 85%;
+  max-width: 320px;
+  height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #141414 50%, #1a1a1a 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  transition: left 0.35s ease;
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-mobile-menu.open {
+  left: 0;
+}
+
+.dashboard-mobile-header {
+  display: flex;
+  align-items: center;
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 12px;
+}
+
+.dashboard-mobile-logo {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  margin: 0;
+}
+
+.dashboard-mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 16px;
+  flex: 1;
+}
+
+.dashboard-mobile-nav a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dashboard-mobile-nav a svg {
+  flex-shrink: 0;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.dashboard-mobile-nav a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: none;
+}
+
+.dashboard-mobile-nav a:hover svg {
+  opacity: 1;
+}
+
+.dashboard-mobile-footer {
+  padding: 16px 16px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 16px;
+}
+
+.dashboard-mobile-footer .login-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+  border: none;
+  border-radius: 12px;
+  color: #000000;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.dashboard-mobile-footer .user-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  padding: 6px 18px 6px 6px;
+  width: fit-content;
+}
+
+.dashboard-mobile-footer .user-lastname {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
 /* ===== Responsive Design ===== */
 @media screen and (max-width: 1024px) {
   .dashboard-container .navbar {
     width: 260px;
   }
-  
+
   .dashboard-container .nav-links a {
     padding: 12px 16px 12px 48px;
     font-size: 14px;
@@ -469,38 +619,18 @@
 }
 
 @media screen and (max-width: 768px) {
+  .dashboard-hamburger {
+    display: flex;
+  }
+
+  .dashboard-container .navbar {
+    display: none;
+  }
+
   .dashboard-container {
     flex-direction: column;
   }
-  
-  .dashboard-container .navbar {
-    width: calc(100% - 20px);
-    height: auto;
-    margin: 10px;
-    position: relative;
-    top: 0;
-  }
-  
-  .dashboard-container .nav-links {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 20px 0;
-  }
-  
-  .dashboard-container .nav-links a {
-    flex: 1 1 auto;
-    min-width: 120px;
-    padding: 12px 16px;
-    justify-content: center;
-  }
-  
-  .dashboard-container .nav-links a::before {
-    position: relative;
-    left: 0;
-    margin-right: 8px;
-  }
-  
+
   .dashboard-content {
     margin: 0 10px 10px;
     padding: 30px;
@@ -508,13 +638,67 @@
 }
 
 @media screen and (max-width: 480px) {
-  .dashboard-container .nav-links a {
-    min-width: 100%;
-  }
-  
   .dashboard-content {
     padding: 20px;
   }
+}
+
+/* Light Theme - Dashboard Hamburger */
+body.light-theme .dashboard-hamburger {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #1a1a1a;
+}
+
+body.light-theme .dashboard-hamburger:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+body.light-theme .dashboard-hamburger.open {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+body.light-theme .dashboard-mobile-menu {
+  background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 50%, #eeeeee 100%);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .dashboard-mobile-logo {
+  color: #1a1a1a;
+  text-shadow: none;
+}
+
+body.light-theme .dashboard-mobile-header {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .dashboard-mobile-nav a {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+body.light-theme .dashboard-mobile-nav a:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #1a1a1a;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .dashboard-mobile-footer {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .dashboard-mobile-footer .login-btn {
+  background: linear-gradient(135deg, #000000 0%, #111111 100%);
+  color: #ffffff;
+}
+
+body.light-theme .dashboard-mobile-footer .user-pill {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .dashboard-mobile-footer .user-lastname {
+  color: #1a1a1a;
 }
 
 /* ===== Additional Content Styles for Dark Background ===== */

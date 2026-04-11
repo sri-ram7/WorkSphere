@@ -58,33 +58,23 @@ function App() {
       <Route path="/auth-required" element={<AuthRequired />} />
 
       <Route path="/expenses" element={
-        <ProtectedRoute>
-          <DashboardLayout><Expenses /></DashboardLayout>
-        </ProtectedRoute>
+        <DashboardLayout><Expenses /></DashboardLayout>
       } />
 
       <Route path="/tasks" element={
-        <ProtectedRoute>
-          <DashboardLayout><Tasks /></DashboardLayout>
-        </ProtectedRoute>
+        <DashboardLayout><Tasks /></DashboardLayout>
       } />
 
       <Route path="/calendar" element={
-        <ProtectedRoute>
-          <DashboardLayout><Calendar /></DashboardLayout>
-        </ProtectedRoute>
+        <DashboardLayout><Calendar /></DashboardLayout>
       } />
 
       <Route path="/attendance" element={
-        <ProtectedRoute>
-          <DashboardLayout><Attendance /></DashboardLayout>
-        </ProtectedRoute>
+        <DashboardLayout><Attendance /></DashboardLayout>
       } />
 
       <Route path="/academics" element={
-        <ProtectedRoute>
-          <DashboardLayout><Academics /></DashboardLayout>
-        </ProtectedRoute>
+        <DashboardLayout><Academics /></DashboardLayout>
       } />
 
       <Route path="/login" element={
